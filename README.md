@@ -32,10 +32,10 @@ This is because there is already a good API for such a task called Clang. Howeve
 // foo.gen.h
 namespace ice::rtti
 {
-  class TestClass;
+  class Box;
 
   template<>
-  void print_class_info<TestClass>() noexcept;
+  void print_class_info<Box>() noexcept;
 }
 
 // foo.h
@@ -53,7 +53,7 @@ struct [[ice::rtti]] Box
 #include <iostream>
 
 template<>
-void ice::rtti::print_class_info<TestClass>() noexcept
+void ice::rtti::print_class_info<Box>() noexcept
 {
     std::cout << "Box : structure" << std::endl;
     std::cout << "Fields: " << std::endl;
