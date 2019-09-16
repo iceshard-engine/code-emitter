@@ -1,4 +1,4 @@
-# Iceshard Code Emmitter 
+# Iceshard Code Emitter 
 
 ## Quick introduction
 
