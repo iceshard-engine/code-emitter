@@ -1,0 +1,49 @@
+#once
+
+// Defined configurations
+//--------------------------------------------------------------------------
+.config_debug =
+[
+    .Config = 'Debug'
+    .CompilerOptions = ' /D_DEBUG'
+        + ' /Od'
+        + ' /Z7'
+        + ' /MDd'
+
+    .LinkerOptions = ' /DEBUG:FULL'
+
+    .ConanConfig = 'Debug'
+]
+
+.config_release_debug =
+[
+    .Config = 'ReleaseDebug'
+    .CompilerOptions = ' /D_RDEBUG'
+        + ' /O2'
+        + ' /Z7'
+        + ' /MD'
+
+    .LinkerOptions = ' /DEBUG:FULL'
+
+    .ConanConfig = 'Release'
+]
+
+.config_release =
+[
+    .Config = 'Release'
+    .CompilerOptions = ' /D_NDEBUG'
+        + ' /O2'
+        // + ' /Z7'
+        + ' /MD'
+
+    .ConanConfig = 'Release'
+]
+
+
+// List of active configurations
+//--------------------------------------------------------------------------
+.ConfigList = {
+    .config_debug,
+    .config_release_debug,
+    .config_release,
+}

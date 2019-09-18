@@ -1,0 +1,118 @@
+// Template Project File
+//------------------------------------------------------------------------------
+{
+    .ProjectName        = 'template'
+    .ProjectBaseDir = '$_CURRENT_BFF_DIR_$'
+
+
+    // Additional helper variables
+    //------------------------------------------------------------------------------
+    .ProjectConanModules = .WorkspaceConanModules
+    .ProjectVisualStudioConfigs = { }
+
+
+    // Library
+    //--------------------------------------------------------------------------
+    ForEach( .Configuration in .Configurations )
+    {
+        Using( .Configuration )
+
+
+        // Conan Dependencies
+        //--------------------------------------------------------------------------
+        ForEach( .ConanModule in .ProjectConanModules )
+        {
+            Using( .'ConanModule_$ConanModule$_$ConanConfig$' )
+
+            // Compiler arguments
+            ForEach( .IncludeDir in .IncludeDirs )
+            {
+                ^CompilerOptions + ' /I"$IncludeDir$"'
+            }
+            ForEach( .Define in .Defines )
+            {
+                ^CompilerOptions + ' /D$Define$'
+            }
+
+            // Linker arguments (for .exe and .dll targets)
+            ForEach( .LibraryDir in .LibDirs )
+            {
+                ^LinkerOptions + ' /LIBPATH:"$LibraryDir$"'
+            }
+            ForEach( .Library in .Libs )
+            {
+                ^LinkerOptions + ' "$Library$.lib"'
+            }
+        }
+
+
+        // Configuration properties
+        //--------------------------------------------------------------------------
+        .ConfigurationIntermediateDirectory = '$WorkspaceBuildDir$/obj/$Platform$-$Config$/$ProjectName$'
+        .ConfigurationTargetDirectory = '$WorkspaceBuildDir$/bin/$Platform$-$Config$/$ProjectName$'
+
+
+        // Object lists
+        //--------------------------------------------------------------------------
+        ObjectList( '$ProjectName$-$Platform$-$Config$-objects' )
+        {
+            .CompilerOptions + ' /I"$ProjectBaseDir$/public"'
+
+            .CompilerOutputPath = .ConfigurationIntermediateDirectory
+            .CompilerInputPath = '$ProjectBaseDir$/private'
+            .CompilerInputPattern = '*.cxx'
+
+            .CompilerInputAllowNoFiles = true
+        }
+
+
+        // Executable target
+        //--------------------------------------------------------------------------
+        Executable( '$ProjectName$-$Platform$-$Config$' )
+        {
+            .CompilerOutputPath = .ConfigurationIntermediateDirectory
+
+            .Libraries = {
+                '$ProjectName$-$Platform$-$Config$-objects'
+            }
+
+            .LinkerOutput = '$ConfigurationTargetDirectory$/$ProjectName$.exe'
+        }
+
+
+
+        // Visual Studio project configuration
+        //--------------------------------------------------------------------------
+        .ProjectVisualStudioConfig =
+        [
+            .PlatformToolset = .PlatformToolset
+
+            .Platform = .Platform
+            .Config = .Config
+            .Target = '$ProjectName$-$Platform$-$Config$-objects'
+
+            .IntermediateDirectory = .ConfigurationIntermediateDirectory
+            .OutputDirectory = .ConfigurationTargetDirectory
+            .Output = '$ConfigurationTargetDirectory$/$ProjectName$.exe'
+
+            .ProjectBuildCommand = '$VSBuildCommand$ $Target$'
+            .ProjectRebuildCommand = '$VSRebuildCommand$ $Target$'
+        ]
+        ^ProjectVisualStudioConfigs + .ProjectVisualStudioConfig
+    }
+
+    // Create a Visual Studio project description
+    //--------------------------------------------------------------------------
+    VCXProject( '$ProjectName$-vcxproj' )
+    {
+        .ProjectOutput = '$ProjectName$.vcxproj'
+        .ProjectConfigs = .ProjectVisualStudioConfigs
+        .ProjectInputPaths = .ProjectBaseDir
+        .ProjectBasePath = .ProjectBaseDir
+    }
+
+    // Register this project
+    //--------------------------------------------------------------------------
+    ^Projects + .ProjectName
+    ^VisualStudioProjects + .ProjectName
+}

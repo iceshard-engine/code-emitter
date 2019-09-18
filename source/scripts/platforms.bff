@@ -1,0 +1,21 @@
+#once
+
+// Defined platforms
+//--------------------------------------------------------------------------
+.platform_x64_windows =
+[
+    Using( .msvcCompilerOptions )
+    Using( .msvcLinkerOptions )
+    Using( .msvcLibrarianOptions )
+
+    .System = 'windows'
+    .Platform = 'x64'
+]
+.platform_x64_windows + .'vs$vsProductVersion$_Variables' ; Adds VisualStudio specific variables
+
+
+// List of active platforms
+//--------------------------------------------------------------------------
+.PlatformList = {
+    .platform_x64_windows,
+}

@@ -1,0 +1,47 @@
+#once
+{
+    .ProjectName = 'all'
+    .ProjectVisualStudioConfigs = { }
+
+    // Library
+    //--------------------------------------------------------------------------
+    ForEach( .Configuration in .Configurations )
+    {
+        Using( .Configuration )
+
+
+        // Configuration properties
+        //--------------------------------------------------------------------------
+        .ConfigurationIntermediateDirectory = '$WorkspaceBuildDir$/obj/$Platform$-$Config$/$ProjectName$'
+        .ConfigurationTargetDirectory = '$WorkspaceBuildDir$/lib/$Platform$-$Config$/$ProjectName$'
+
+
+        // Visual Studio project configuration
+        //--------------------------------------------------------------------------
+        .ProjectVisualStudioConfig =
+        [
+            .PlatformToolset = .PlatformToolset
+
+            .Platform = .Platform
+            .Config = .Config
+
+            .IntermediateDirectory = .ConfigurationIntermediateDirectory
+            .OutputDirectory = .ConfigurationTargetDirectory
+            .Output = '$ConfigurationTargetDirectory$/$ProjectName$.lib'
+
+            .ProjectBuildCommand = '$VSBuildCommand$ $ProjectName$-$Platform$-$Config$'
+            .ProjectRebuildCommand = '$VSRebuildCommand$ $ProjectName$-$Platform$-$Config$'
+        ]
+        ^ProjectVisualStudioConfigs + .ProjectVisualStudioConfig
+    }
+
+    // Create a Visual Studio project description
+    //--------------------------------------------------------------------------
+    VCXProject( '$ProjectName$-vcxproj' )
+    {
+        .ProjectOutput = '$ProjectName$.vcxproj'
+        .ProjectConfigs = .ProjectVisualStudioConfigs
+    }
+
+    ^VisualStudioProjects + .ProjectName
+}

@@ -1,0 +1,5 @@
+// Include project file
+#include "template/template.bff"
+
+// Include the vs solution folder
+#include "$WorkspaceScriptDir$/vsgroup.bff"

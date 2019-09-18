@@ -1,0 +1,32 @@
+// Creates a Visual Studio solution folder for the current list of projects
+//------------------------------------------------------------------------------
+{
+    .SolutionFolderNameEmpty = ''
+
+    // If the solution folder name is not empty (create a folder)
+    If ( .SolutionFolderName != .SolutionFolderNameEmpty )
+    {
+        .SolutionFolder =
+        [
+            .Path = .SolutionFolderName
+            .Projects = { }
+            ForEach( .Project in .VisualStudioProjects )
+            {
+                ^Projects + '$Project$-vcxproj'
+            }
+
+            ^SolutionProjects + .Projects
+        ]
+        ^SolutionFolders + .SolutionFolder
+        .VisualStudioProjects = { }
+    }
+
+    // If the solution folder name is empty (add the projects straight into the solution)
+    If ( .SolutionFolderName == .SolutionFolderNameEmpty )
+    {
+        ForEach( .Project in .VisualStudioProjects )
+        {
+            ^SolutionProjects + '$Project$-vcxproj'
+        }
+    }
+}
