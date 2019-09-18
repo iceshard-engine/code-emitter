@@ -1,7 +1,6 @@
 [requires]
 
 [build_requires]
-fastbuild-installer/0.98@iceshard/stable
 fastbuild-generator/0.1@iceshard/stable
 
 [options]
