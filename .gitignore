@@ -1,1 +1,5 @@
+# IDE directories
+.vs/
+
+# Temporary directories
 build/
