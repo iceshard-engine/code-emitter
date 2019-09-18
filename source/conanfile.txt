@@ -1,0 +1,9 @@
+[requires]
+
+[build_requires]
+fastbuild-generator/0.1@iceshard/stable
+
+[options]
+
+[generators]
+fastbuild
