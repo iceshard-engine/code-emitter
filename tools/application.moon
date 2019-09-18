@@ -1,9 +1,16 @@
 import Application from require "ice.application"
 
+import BuildCommand from require "ice.command.build"
+import GenerateProjectsCommand from require "ice.command.generate_projects"
+
 class Ice extends Application
     @name: 'Ice - Code Emitter'
     @description: 'A specific tool for parsing and emitting code'
     @arguments: { }
+    @commands: {
+        build: BuildCommand
+        generate: GenerateProjectsCommand
+    }
 
     -- Plain call to the application
     execute: (args) =>
