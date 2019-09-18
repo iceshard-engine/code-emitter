@@ -3,3 +3,7 @@
 
 # Temporary directories
 build/
+
+# Temporary files
+*.sln
+*.fdb
