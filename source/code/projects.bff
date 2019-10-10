@@ -1,5 +1,9 @@
+.SolutionFolderName = '1. Libraries'
+
 // Include project file
-#include "template/template.bff"
+#include "icelib/icelib.bff"
 
 // Include the vs solution folder
 #include "$WorkspaceScriptDir$/vsgroup.bff"
+
+.SolutionFolderName = ''

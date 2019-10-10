@@ -18,7 +18,7 @@
             ^SolutionProjects + .Projects
         ]
         ^SolutionFolders + .SolutionFolder
-        .VisualStudioProjects = { }
+        ^VisualStudioProjects = { }
     }
 
     // If the solution folder name is empty (add the projects straight into the solution)

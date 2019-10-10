@@ -1,14 +1,13 @@
 // Template Project File
 //------------------------------------------------------------------------------
 {
-    .ProjectName        = 'template'
+    .ProjectName = 'icelib'
     .ProjectBaseDir = '$_CURRENT_BFF_DIR_$'
 
 
     // Additional helper variables
     //------------------------------------------------------------------------------
     .ProjectConanModules = .WorkspaceConanModules
-        + 'CLI11'
     .ProjectVisualStudioConfigs = { }
 
 
@@ -34,23 +33,13 @@
             {
                 ^CompilerOptions + ' /D$Define$'
             }
-
-            // Linker arguments (for .exe and .dll targets)
-            ForEach( .LibraryDir in .LibDirs )
-            {
-                ^LinkerOptions + ' /LIBPATH:"$LibraryDir$"'
-            }
-            ForEach( .Library in .Libs )
-            {
-                ^LinkerOptions + ' "$Library$.lib"'
-            }
         }
 
 
         // Configuration properties
         //--------------------------------------------------------------------------
         .ConfigurationIntermediateDirectory = '$WorkspaceBuildDir$/obj/$Platform$-$Config$/$ProjectName$'
-        .ConfigurationTargetDirectory = '$WorkspaceBuildDir$/bin/$Platform$-$Config$/$ProjectName$'
+        .ConfigurationTargetDirectory = '$WorkspaceBuildDir$/lib/$Platform$-$Config$/$ProjectName$'
 
 
         // Object lists
@@ -69,17 +58,16 @@
 
         // Executable target
         //--------------------------------------------------------------------------
-        Executable( '$ProjectName$-$Platform$-$Config$' )
+        Library( '$ProjectName$-$Platform$-$Config$' )
         {
             .CompilerOutputPath = .ConfigurationIntermediateDirectory
 
-            .Libraries = {
+            .LibrarianAdditionalInputs = {
                 '$ProjectName$-$Platform$-$Config$-objects'
             }
 
-            .LinkerOutput = '$ConfigurationTargetDirectory$/$ProjectName$.exe'
+            .LibrarianOutput = '$ConfigurationTargetDirectory$/$ProjectName$.lib'
         }
-
 
 
         // Visual Studio project configuration
@@ -96,8 +84,8 @@
             .OutputDirectory = .ConfigurationTargetDirectory
             .Output = '$ConfigurationTargetDirectory$/$ProjectName$.exe'
 
-            .ProjectBuildCommand = '$VSBuildCommand$ $Target$'
-            .ProjectRebuildCommand = '$VSRebuildCommand$ $Target$'
+            .ProjectBuildCommand = '$VSBuildCommand$ $ProjectName$-$Platform$-$Config$'
+            .ProjectRebuildCommand = '$VSRebuildCommand$ $ProjectName$-$Platform$-$Config$'
         ]
         ^ProjectVisualStudioConfigs + .ProjectVisualStudioConfig
     }
