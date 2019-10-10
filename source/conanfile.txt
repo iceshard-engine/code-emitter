@@ -1,8 +1,9 @@
 [requires]
+CLI11/1.8.0@iceshard/stable
 
 [build_requires]
 fastbuild-generator/0.1@iceshard/stable
-CLI11/1.8.0@iceshard/stable
+Catch2/2.9.0@iceshard/stable
 
 [options]
 
