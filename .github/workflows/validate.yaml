@@ -23,4 +23,4 @@ jobs:
 
     - name: Verify
       run: |
-        build\bin\x64-ReleaseDebug\template\template.exe
+        echo "Nothing to verify yet!"
