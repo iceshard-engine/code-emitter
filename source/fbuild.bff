@@ -23,7 +23,7 @@ Settings
 
 // Required files to be included
 //--------------------------------------------------------------------------
-// #include "$WorkspaceBuildDir$/conan.bff"
+#include "$WorkspaceBuildDir$/conan.bff"
 #include "$WorkspaceScriptDir$/compilers.bff"
 #include "$WorkspaceScriptDir$/platforms.bff"
 #include "$WorkspaceScriptDir$/configurations.bff"
@@ -99,7 +99,7 @@ ForEach( .Configuration in .Configurations )
 //--------------------------------------------------------------------------
 VSSolution( 'solution' )
 {
-    .SolutionOutput = '../IceShard.sln'
+    .SolutionOutput = '../Ice.sln'
     .SolutionConfigs = .Configurations
 
     .SolutionFolders = .SolutionFolders

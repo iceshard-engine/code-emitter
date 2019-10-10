@@ -2,6 +2,7 @@
 
 [build_requires]
 fastbuild-generator/0.1@iceshard/stable
+CLI11/1.8.0@iceshard/stable
 
 [options]
 
