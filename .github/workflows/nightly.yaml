@@ -1,26 +1,24 @@
-name: Validation
+name: Nightly
 
 on:
-  push:
-    branches:
-    - master
+  schedule:
+    # Every day at 1 am
+    - cron: 0 1 * * *
 
 jobs:
-  validation-build:
+  nightly-build-windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
-
+    - name: Checkout repository
+      uses: actions/checkout@v1
     - name: Setup repository
       run: |
         pip install conan
         conan remote add conan-iceshard https://conan.iceshard.net/
         conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-
-    - name: Build
+    - name: Build (ReleaseDebug)
       run: |
         ice build
-
     - name: Verify
       run: |
-        echo "Nothing to verify yet!"
+        echo Nothing to verify yet
