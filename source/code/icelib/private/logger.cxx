@@ -1,4 +1,4 @@
-#include <ice/logger.h>
+#include <ice/logger.hxx>
 #include <ice/debugging.hxx>
 
 #include <fmt/printf.h>
