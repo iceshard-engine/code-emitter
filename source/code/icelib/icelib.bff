@@ -82,7 +82,7 @@
 
             .IntermediateDirectory = .ConfigurationIntermediateDirectory
             .OutputDirectory = .ConfigurationTargetDirectory
-            .Output = '$ConfigurationTargetDirectory$/$ProjectName$.exe'
+            .Output = '$ConfigurationTargetDirectory$/$ProjectName$.lib'
 
             .ProjectBuildCommand = '$VSBuildCommand$ $ProjectName$-$Platform$-$Config$'
             .ProjectRebuildCommand = '$VSRebuildCommand$ $ProjectName$-$Platform$-$Config$'

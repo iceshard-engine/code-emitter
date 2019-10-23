@@ -4,7 +4,6 @@
 namespace ice
 {
 
-
     //! \brief This class is used to access module capabilities as services.
     class ModuleServices
     {
@@ -18,6 +17,5 @@ namespace ice
         //! \brief A Serializer object serializing 'Element' objects.
         virtual auto serializer_service() noexcept -> ice::output::Serializer* { return nullptr; }
     };
-
 
 } // namespace ice
