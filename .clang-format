@@ -10,10 +10,16 @@ BreakConstructorInitializers: BeforeComma
 
 PointerAlignment: Left
 DerivePointerAlignment: true
-FixNamespaceComments: true
+
 SortIncludes: false
+SortUsingDeclarations: true
+
+SpaceAfterTemplateKeyword: false
 
 NamespaceIndentation: All
+FixNamespaceComments: true
+
+IndentPPDirectives: AfterHash
 IndentCaseLabels: false
 IndentWidth: 4
 TabWidth: 4
