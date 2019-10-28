@@ -204,7 +204,7 @@ namespace ice::output
     class ASTInvokeOperator : public ASTElement
     {
     public:
-        explicit ASTInvokeOperator(const InvokeOperator const& data) noexcept;
+        explicit ASTInvokeOperator(InvokeOperator const& data) noexcept;
 
         template<class T>
         auto set_argument(std::string name, T const& element_data, bool new_line = false) noexcept -> auto&;

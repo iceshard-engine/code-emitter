@@ -41,7 +41,7 @@ namespace ice::output
         explicit ASTInvokeable(const Invoke& invoke_data) noexcept;
 
         template<class T>
-        auto set_argument(std::string name, const T const& element_data, bool new_line = false) noexcept -> auto&;
+        auto set_argument(std::string name, T const& element_data, bool new_line = false) noexcept -> auto&;
 
         template<class T>
         auto chain_element(T const& data) noexcept -> auto&;
