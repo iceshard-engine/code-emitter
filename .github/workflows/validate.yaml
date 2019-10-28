@@ -24,4 +24,4 @@ jobs:
 
     - name: Verify
       run: |
-        echo "Nothing to verify yet!"
+        build/bin/x64-ReleaseDebug/icelib_tests/icelib_tests.exe
