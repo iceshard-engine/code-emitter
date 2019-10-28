@@ -4,7 +4,7 @@ namespace ice::output
 {
 
     template<>
-    auto ice::output::identifier(const Variable& data) noexcept -> std::string
+    auto ice::output::identifier(Variable const& data) noexcept -> std::string
     {
         static int lineid = 0;
 
@@ -26,8 +26,9 @@ namespace ice::output
         return result;
     }
 
-    ASTVariable::ASTVariable(const Variable& variable_data) noexcept
+    ASTVariable::ASTVariable(Variable const& variable_data) noexcept
         : ASTElement{ ice::output::identifier(variable_data) }
-    { }
+    {
+    }
 
 } // namespace ice::output

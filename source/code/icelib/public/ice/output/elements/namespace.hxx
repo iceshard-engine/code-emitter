@@ -4,7 +4,6 @@
 namespace ice::output
 {
 
-
     struct Namespace
     {
         std::string name;
@@ -12,16 +11,7 @@ namespace ice::output
         bool emit_unnamed{ true };
     };
 
-
     template<>
-    auto identifier(const Namespace& data) noexcept -> std::string;
-
-
-    class ASTNamespace : public ASTContainer
-    {
-    public:
-        explicit ASTNamespace(const Namespace& data) noexcept;
-    };
-
+    auto identifier(Namespace const& data) noexcept -> std::string;
 
 } // namespace ice::output

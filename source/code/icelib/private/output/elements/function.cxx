@@ -7,17 +7,15 @@ namespace ice::output
     {
 
         // Concatenates all function arguments into a single string usable as a identifier.
-        auto function_identifier_arguments(const Function& data) noexcept -> std::string
+        auto function_identifier_arguments(Function const& data) noexcept -> std::string
         {
-            std::string result{ };
+            std::string result{};
             if (!data.arguments.empty())
             {
                 result = std::accumulate(std::next(data.arguments.begin()), data.arguments.end(), data.arguments.front().type.identifier(),
-                    [&](std::string left, const Function::Argument& argument)
-                    {
+                    [&](std::string left, Function::Argument const& argument) {
                         return std::move(left) + ", " + argument.type.identifier();
-                    }
-                );
+                    });
             }
             return result;
         }
@@ -25,7 +23,7 @@ namespace ice::output
     } // namespace detail
 
     template<>
-    auto ice::output::identifier(const Function& data) noexcept -> std::string
+    auto ice::output::identifier(Function const& data) noexcept -> std::string
     {
         std::string result{ "function:" };
         result += data.is_declaration ? "declaration:" : "";

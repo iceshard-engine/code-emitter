@@ -5,7 +5,7 @@ namespace ice::output
 {
 
     template<>
-    auto identifier(const UnaryOperator& data) noexcept -> std::string
+    auto identifier(UnaryOperator const& data) noexcept -> std::string
     {
         std::string result{ "operator:unary." };
         result += data.wrap_expression ? "wrapped." : "";
@@ -15,7 +15,7 @@ namespace ice::output
     }
 
     template<>
-    auto identifier(const BinaryOperator& data) noexcept -> std::string
+    auto identifier(BinaryOperator const& data) noexcept -> std::string
     {
         std::string result{ "operator:binary." };
         result += data.wrap_expression ? "wrapped." : "";
@@ -24,7 +24,7 @@ namespace ice::output
     }
 
     template<>
-    auto identifier(const InvokeOperator& data) noexcept -> std::string
+    auto identifier(InvokeOperator const& data) noexcept -> std::string
     {
         static int lineid = 0;
 
@@ -41,16 +41,19 @@ namespace ice::output
         return result;
     }
 
-    ASTUnaryOperator::ASTUnaryOperator(const UnaryOperator& data) noexcept
+    ASTUnaryOperator::ASTUnaryOperator(UnaryOperator const& data) noexcept
         : ASTElement{ ice::output::identifier(data) }
-    { }
+    {
+    }
 
-    ASTBinaryOperator::ASTBinaryOperator(const BinaryOperator& data) noexcept
+    ASTBinaryOperator::ASTBinaryOperator(BinaryOperator const& data) noexcept
         : ASTElement{ ice::output::identifier(data) }
-    { }
+    {
+    }
 
-    ASTInvokeOperator::ASTInvokeOperator(const InvokeOperator& data) noexcept
+    ASTInvokeOperator::ASTInvokeOperator(InvokeOperator const& data) noexcept
         : ASTElement{ ice::output::identifier(data) }
-    { }
+    {
+    }
 
 } // namespace ice::output

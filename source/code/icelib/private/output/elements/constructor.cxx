@@ -7,17 +7,15 @@ namespace ice::output
     {
 
         // Concatenates all constructor arguments into a single string usable as a identifier.
-        auto constructor_identifier_arguments(const Constructor& data) noexcept -> std::string
+        auto constructor_identifier_arguments(Constructor const& data) noexcept -> std::string
         {
-            std::string result{ };
+            std::string result{};
             if (!data.arguments.empty())
             {
                 result = std::accumulate(std::next(data.arguments.begin()), data.arguments.end(), data.arguments.front().type.identifier(),
-                    [&](std::string left, const Constructor::Argument& argument)
-                    {
+                    [&](std::string left, Constructor::Argument const& argument) {
                         return std::move(left) + ", " + argument.type.identifier();
-                    }
-                );
+                    });
             }
             return result;
         }
@@ -25,7 +23,7 @@ namespace ice::output
     } // namespace detail
 
     template<>
-    auto identifier(const Constructor & data) noexcept -> std::string
+    auto identifier(Constructor const& data) noexcept -> std::string
     {
         std::string result{ "constructor:" };
         result += data.is_declaration ? "declaration:" : "";
@@ -37,7 +35,7 @@ namespace ice::output
     }
 
     template<>
-    auto identifier(const Destructor & data) noexcept -> std::string
+    auto identifier(Destructor const& data) noexcept -> std::string
     {
         std::string result{ "destructor:" };
         result += data.is_declaration ? "declaration:" : "";
@@ -47,8 +45,9 @@ namespace ice::output
         return result;
     }
 
-    ASTConstructor::ASTConstructor(const Constructor& data) noexcept
+    ASTConstructor::ASTConstructor(Constructor const& data) noexcept
         : ASTContainer{ ice::output::identifier(data), true }
-    { }
+    {
+    }
 
 } // namespace ice::output

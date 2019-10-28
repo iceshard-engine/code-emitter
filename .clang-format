@@ -1,5 +1,7 @@
 BasedOnStyle: LLVM
 
+AlignAfterOpenBracket: DontAlign
+
 AccessModifierOffset: -4
 AllowShortIfStatementsOnASingleLine: false
 BreakBeforeBraces: Allman
@@ -23,3 +25,5 @@ IndentPPDirectives: AfterHash
 IndentCaseLabels: false
 IndentWidth: 4
 TabWidth: 4
+
+ContinuationIndentWidth: 4

@@ -4,15 +4,12 @@
 namespace ice::output
 {
 
-
     struct CodeBlock
     {
         std::string name;
     };
 
-
     template<>
-    auto identifier(const CodeBlock&) noexcept -> std::string;
-
+    auto identifier(CodeBlock const&) noexcept -> std::string;
 
 } // namespace ice::output

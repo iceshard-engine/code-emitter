@@ -6,13 +6,23 @@
 namespace ice::output
 {
 
-
     //! Defines a type object, which holds a given type and may be nested.
     class Type
     {
     public:
         //! Possible type properties.
-        enum class Property { CONSTANT, POINTER, CONSTANT_POINTER, REFERENCE, VOLATILE, NATIVE, TEMPLATE, TEMPLATE_SPECIALIZED, LOCKED };
+        enum class Property
+        {
+            CONSTANT,
+            POINTER,
+            CONSTANT_POINTER,
+            REFERENCE,
+            VOLATILE,
+            NATIVE,
+            TEMPLATE,
+            TEMPLATE_SPECIALIZED,
+            LOCKED
+        };
 
         //! Creates an 'void' type.
         Type();
@@ -30,22 +40,22 @@ namespace ice::output
         Type(std::string name, std::vector<std::string> template_args, std::set<Property> properties);
 
         //! Returns a new type with the same flags using the given format to change the name.
-        Type transform(const std::string& format);
+        Type transform(std::string const& format);
 
         //! Returns a new type specialized with the given vector of values.
-        Type specialize(const std::unordered_map<std::string, std::string>& args);
+        Type specialize(std::unordered_map<std::string, std::string> const& args);
 
         //! The type identifier.
         auto identifier() const noexcept -> std::string;
 
         //! The types base name.
-        auto basename() const -> const auto& { return _name; }
+        auto basename() const -> auto const& { return _name; }
 
         //! The type template argument names.
-        auto template_arguments() const -> const auto& { return _template_args; }
+        auto template_arguments() const -> auto const& { return _template_args; }
 
         //! The type template specialized argument map.
-        auto template_specializations() const -> const auto& { return _specialized_args; }
+        auto template_specializations() const -> auto const& { return _specialized_args; }
 
         //! Serializes the type template part if existing.
         void serialize_template(Writer& strm) const;
@@ -80,7 +90,7 @@ namespace ice::output
     protected:
         //! Creates copy of the 'Type' object but with a different base name.
         //! \note used by the Type::mutate method.
-        Type(const Type& other, std::string name);
+        Type(Type const& other, std::string name);
 
         //! Checks for the given property.
         bool has(Property prop) const;
@@ -98,6 +108,5 @@ namespace ice::output
         //! The type properties.
         std::set<Property> _properties;
     };
-
 
 } // namespace ice::output

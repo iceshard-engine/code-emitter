@@ -4,7 +4,6 @@
 namespace ice::output
 {
 
-
     //! \brief Describes a class which is capable of serializing a generated ICE AST.
     class Serializer
     {
@@ -23,6 +22,5 @@ namespace ice::output
         //! \note This file needs to be enabled for generation.
         virtual auto inline_file() noexcept -> ice::output::ASTRoot& = 0;
     };
-
 
 } // namespace ice::output

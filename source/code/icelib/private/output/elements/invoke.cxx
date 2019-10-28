@@ -5,7 +5,7 @@ namespace ice::output
 {
 
     template<>
-    auto ice::output::identifier(const Invoke& data) noexcept -> std::string
+    auto ice::output::identifier(Invoke const& data) noexcept -> std::string
     {
         static int lineid = 0;
 
@@ -24,17 +24,19 @@ namespace ice::output
     }
 
     template<>
-    auto ice::output::identifier(const Initializer& data) noexcept -> std::string
+    auto ice::output::identifier(Initializer const& data) noexcept -> std::string
     {
         return "initializer:" + ice::output::identifier<Invoke>(data);
     }
 
-    ASTInvokeable::ASTInvokeable(const Invoke& invoke_data) noexcept
+    ASTInvokeable::ASTInvokeable(Invoke const& invoke_data) noexcept
         : ASTElement{ ice::output::identifier(invoke_data) }
-    { }
+    {
+    }
 
-    ASTInvokeable::ASTInvokeable(std::string element_identifier) noexcept
-        : ASTElement{ std::move(element_identifier) }
-    { }
+    ASTInvokeable::ASTInvokeable(std::string uuid) noexcept
+        : ASTElement{ std::move(uuid) }
+    {
+    }
 
 } // namespace ice::output

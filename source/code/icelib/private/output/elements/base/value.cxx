@@ -4,7 +4,7 @@ namespace ice::output
 {
 
     template<>
-    auto identifier(const Value& data) noexcept -> std::string
+    auto identifier(Value const& data) noexcept -> std::string
     {
         static int lineid = 0;
 

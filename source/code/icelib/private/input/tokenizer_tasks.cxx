@@ -23,7 +23,6 @@ namespace ice::input
         {
             ht_assert(stream.good(), "Invalid input stream object!");
 
-
             token parsed_token{
                 .type = TokenType::Invalid,
                 .position = position,

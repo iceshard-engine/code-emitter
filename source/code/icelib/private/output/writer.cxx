@@ -69,8 +69,6 @@ namespace ice::output
         return _context_stack.top();
     }
 
-
-
     auto operator<<(Writer& writer, std::string str) noexcept -> Writer&
     {
         return writer.append(str);

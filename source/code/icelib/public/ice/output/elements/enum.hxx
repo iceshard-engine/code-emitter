@@ -5,7 +5,6 @@
 namespace ice::output
 {
 
-
     struct Enum
     {
         std::string name;
@@ -14,7 +13,7 @@ namespace ice::output
         {
             std::string name;
 
-            std::string value{ };
+            std::string value{};
         };
 
         std::vector<EnumValue> values;
@@ -26,16 +25,7 @@ namespace ice::output
         bool is_declaration{ false };
     };
 
-
     template<>
-    auto identifier(const Enum&) noexcept -> std::string;
-
-
-    class ASTEnum : public ASTElement
-    {
-    public:
-        ASTEnum(const Enum& data) noexcept;
-    };
-
+    auto identifier(Enum const&) noexcept -> std::string;
 
 } // namespace ice::output

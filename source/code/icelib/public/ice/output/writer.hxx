@@ -6,19 +6,25 @@
 namespace ice::output
 {
 
-
     //! \brief 'EndOfLine' tag type.
-    struct endl_token { };
+    struct endl_token
+    {
+    };
 
     //! \brief 'Indent' tag type.
-    struct indent_token { };
+    struct indent_token
+    {
+    };
 
     //! \brief 'PushIndent' tag type.
-    struct push_token { };
+    struct push_token
+    {
+    };
 
     //! \brief 'PopIndent' tag type.
-    struct pop_token { };
-
+    struct pop_token
+    {
+    };
 
     //! \brief Contexts used during serialization.
     enum class OutputContext
@@ -28,7 +34,6 @@ namespace ice::output
         //! \brief Serialization takes place inside another serialization element, and no identation should take place.
         Embedded,
     };
-
 
     //! \brief This class is used to serialize the final produced AST.
     //!
@@ -61,8 +66,7 @@ namespace ice::output
         auto pop_context() noexcept -> Writer&;
 
         //! \brief The currnet output context type.
-        auto output_context() const noexcept->OutputContext;
-
+        auto output_context() const noexcept -> OutputContext;
 
     public:
         friend auto operator<<(Writer& writer, std::string str) noexcept -> Writer&;
@@ -82,12 +86,11 @@ namespace ice::output
         std::ostream& _stream;
 
         //! \brief The output context stack.
-        std::stack<OutputContext> _context_stack{ };
+        std::stack<OutputContext> _context_stack{};
 
         //! \brief The indentation level.
         int32_t _level{ 0 };
     };
-
 
     auto operator<<(Writer& writer, std::string str) noexcept -> Writer&;
     auto operator<<(Writer& writer, endl_token) noexcept -> Writer&;
@@ -95,11 +98,9 @@ namespace ice::output
     auto operator<<(Writer& writer, push_token) noexcept -> Writer&;
     auto operator<<(Writer& writer, pop_token) noexcept -> Writer&;
 
-
     static endl_token endl;
     static indent_token indent;
     static push_token push;
     static pop_token pop;
-
 
 } // namespace ice::output

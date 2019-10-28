@@ -4,7 +4,6 @@
 namespace ice::output
 {
 
-
     struct Value
     {
         std::string value{ "" };
@@ -19,9 +18,7 @@ namespace ice::output
         Unique unique{ "not_unique" };
     };
 
-
     template<>
-    auto identifier(const Value&) noexcept -> std::string;
-
+    auto identifier(Value const&) noexcept -> std::string;
 
 } // namespace ice::output

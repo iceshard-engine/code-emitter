@@ -6,7 +6,6 @@
 namespace ice::output
 {
 
-
     struct AccessSpecifier
     {
         enum class Type
@@ -25,7 +24,6 @@ namespace ice::output
 
         Unique unique{ "default" };
     };
-
 
     struct UserType
     {
@@ -46,52 +44,35 @@ namespace ice::output
             AccessSpecifier::Type access_type{ AccessSpecifier::Type::Public };
         };
 
-        std::vector<Parent> parents{ };
+        std::vector<Parent> parents{};
 
         std::string parent_namespace{ "" };
 
-        std::string metadata{ };
+        std::string metadata{};
 
         struct TemplateArgument
         {
             std::string name;
 
-            std::string specialization{ };
+            std::string specialization{};
 
-            std::string default_value{ };
+            std::string default_value{};
         };
 
-        std::vector<TemplateArgument> template_arguments{ };
+        std::vector<TemplateArgument> template_arguments{};
 
         bool is_declaration{ false };
         bool is_friend_declaration{ false };
     };
 
+    template<>
+    auto identifier(AccessSpecifier const& data) noexcept -> std::string;
 
     template<>
-    auto identifier(const AccessSpecifier& data) noexcept -> std::string;
-
-    template<>
-    auto identifier(const UserType& data) noexcept -> std::string;
-
+    auto identifier(UserType const& data) noexcept -> std::string;
 
     auto to_string(AccessSpecifier::Type type) noexcept -> std::string;
 
     auto to_string(UserType::Type type) noexcept -> std::string;
-
-
-    class ASTAccessSpecifier : public ASTContainer
-    {
-    public:
-        ASTAccessSpecifier(const AccessSpecifier&) noexcept;
-    };
-
-
-    class ASTUserType : public ASTContainer
-    {
-    public:
-        ASTUserType(const UserType& usertype_data) noexcept;
-    };
-
 
 } // namespace ice::output

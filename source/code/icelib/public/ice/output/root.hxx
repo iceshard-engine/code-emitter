@@ -4,7 +4,6 @@
 namespace ice::output
 {
 
-
     class ASTRoot : public ice::output::ASTContainer
     {
     public:
@@ -26,6 +25,5 @@ namespace ice::output
         //! \brief Serializes the whole Root element and all its children to the final representation.
         virtual void serialize() const noexcept = 0;
     };
-
 
 } // namespace ice::output

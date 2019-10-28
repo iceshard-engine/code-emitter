@@ -56,13 +56,13 @@ namespace ice::input
         Tokenizer(Tokenizer&& other) noexcept;
 
         //! \brief A tokenizer object cannot be copied.
-        Tokenizer(const Tokenizer&) noexcept = delete;
+        Tokenizer(Tokenizer const&) noexcept = delete;
 
         //! \brief A tokenizer object can be move around.
         auto operator=(Tokenizer&& other) noexcept -> Tokenizer&;
 
         //! \brief A tokenizer object cannot be copied.
-        auto operator=(const Tokenizer&) noexcept -> Tokenizer& = delete;
+        auto operator=(Tokenizer const&) noexcept -> Tokenizer& = delete;
 
         //! \brief Checks if another token is available.
         bool has_next_token() const noexcept;

@@ -5,7 +5,6 @@
 namespace ice::output
 {
 
-
     struct Include
     {
         std::string path;
@@ -13,9 +12,7 @@ namespace ice::output
         bool is_sysinclude{ false };
     };
 
-
     template<>
-    auto identifier(const Include& data) noexcept -> std::string;
-
+    auto identifier(Include const& data) noexcept -> std::string;
 
 } // namespace ice::output

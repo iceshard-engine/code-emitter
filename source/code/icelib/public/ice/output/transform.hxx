@@ -4,7 +4,6 @@
 namespace ice::output::data
 {
 
-
     template<class C, class T>
     struct DataTransform
     {
@@ -12,11 +11,10 @@ namespace ice::output::data
 
         constexpr DataTransform(T(C::*member_pointer), T requested_value) noexcept;
 
-        [[nodiscard]]
-        constexpr auto operator()(T value) const noexcept->DataTransform;
+        [[nodiscard]] constexpr auto operator()(T value) const noexcept -> DataTransform;
 
         template<class C, class T>
-        friend auto operator|(C data, const DataTransform<C, T>& transform) noexcept->C;
+        friend auto operator|(C data, DataTransform<C, T> const& transform) noexcept -> C;
 
     private:
         T(C::*field);
@@ -30,33 +28,31 @@ namespace ice::output::data
     template<class C, class T>
     DataTransform(T(C::*))->DataTransform<C, T>;
 
-
     template<class C, class T>
-    [[nodiscard]]
-    auto operator|(C data, const DataTransform<C, T>& transform) noexcept -> C
+    [[nodiscard]] auto operator|(C data, DataTransform<C, T> const& transform) noexcept -> C
     {
         (data.*transform.field) = transform.value;
         return std::move(data);
     }
 
-
     template<class C, class T>
     constexpr DataTransform<C, T>::DataTransform(T(C::*member_pointer)) noexcept
         : field{ member_pointer }
-        , value{ }
-    { }
+        , value{}
+    {
+    }
 
     template<class C, class T>
     constexpr DataTransform<C, T>::DataTransform(T(C::*member_pointer), T requested_value) noexcept
         : field{ member_pointer }
         , value{ std::move(requested_value) }
-    { }
+    {
+    }
 
     template<class C, class T>
     constexpr auto ice::output::data::DataTransform<C, T>::operator()(T new_value) const noexcept -> DataTransform
     {
         return DataTransform<C, T>{ field, std::move(new_value) };
     }
-
 
 } // namespace ice::output::data

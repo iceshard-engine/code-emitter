@@ -7,7 +7,8 @@ namespace ice::output
 
     ASTRoot::ASTRoot() noexcept
         : ASTContainer{ Container{ "" } }
-    { }
+    {
+    }
 
     void ASTRoot::serialize(Writer& writer) const noexcept
     {

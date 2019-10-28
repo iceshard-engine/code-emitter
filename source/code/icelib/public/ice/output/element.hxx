@@ -5,17 +5,13 @@
 #include <memory>
 #include <string>
 
-
 namespace ice::output
 {
 
-
     class Factory;
 
-
     template<typename T>
-    auto identifier(const T&) noexcept -> std::string;
-
+    auto identifier(T const&) noexcept -> std::string;
 
     template<typename Container, typename T>
     auto transform(T&& object) noexcept -> T&&
@@ -23,12 +19,11 @@ namespace ice::output
         return std::move(object);
     }
 
-
     //! \brief Describes a single AST element.
     class ASTElement
     {
     public:
-        ASTElement(std::string element_uuid) noexcept;
+        ASTElement(std::string uuid) noexcept;
         virtual ~ASTElement() noexcept = default;
 
         //! \brief Element unique identifier.
@@ -44,25 +39,23 @@ namespace ice::output
         const std::string _identifier;
     };
 
-
     //! \brief Describes a AST element capable of holding child elements.
     class ASTContainerElement : public ASTElement
     {
     public:
-        ASTContainerElement(std::string element_uuid) noexcept;
+        ASTContainerElement(std::string uuid) noexcept;
         virtual ~ASTContainerElement() noexcept override = default;
 
         template<typename T>
-        bool contains(const T& element_data) const noexcept;
+        bool contains(T const& data) const noexcept;
 
         template<typename T, typename... Args>
-        auto add(const T& data, Args&&... args) noexcept -> auto&;
+        auto add(T const& data, Args&&... args) noexcept -> auto&;
 
     protected:
-        virtual auto get(const std::string& id) const noexcept -> ASTElement* = 0;
+        virtual auto get(std::string const& id) const noexcept -> ASTElement* = 0;
         virtual auto set(std::unique_ptr<ASTElement> element) noexcept -> ASTElement* = 0;
     };
-
 
     template<typename T>
     bool ASTContainerElement::contains(const T& element_data) const noexcept
@@ -83,6 +76,5 @@ namespace ice::output
         }
         return *static_cast<return_type*>(element);
     }
-
 
 } // namespace ice::output

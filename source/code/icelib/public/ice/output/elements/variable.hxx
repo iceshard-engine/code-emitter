@@ -5,7 +5,6 @@
 namespace ice::output
 {
 
-
     struct Variable
     {
         std::string name;
@@ -27,48 +26,40 @@ namespace ice::output
             std::string value{ "" };
         };
 
-        Unique unique{ };
+        Unique unique{};
     };
 
-
     template<>
-    auto identifier(const Variable&) noexcept -> std::string;
-
+    auto identifier(Variable const&) noexcept -> std::string;
 
     class ASTVariable : public ASTElement
     {
     public:
-        ASTVariable(const Variable& variable_data) noexcept;
+        ASTVariable(Variable const& variable_data) noexcept;
 
         template<class T>
-        auto chain_element(const T& data) noexcept -> auto&;
+        auto chain_element(T const& data) noexcept -> auto&;
 
         template<class T>
-        auto append_element(const T& data) noexcept -> auto&;
+        auto append_element(T const& data) noexcept -> auto&;
 
         template<class T>
-        auto initialize(const T& data) noexcept -> auto&;
+        auto initialize(T const& data) noexcept -> auto&;
 
     protected:
-        virtual auto get_element(
-            std::string dataid
-        ) const noexcept -> ASTElement* = 0;
+        virtual auto get_element(std::string uuid) const noexcept -> ASTElement* = 0;
 
-        virtual auto set_element(
-            std::unique_ptr<ASTElement> element
-            , bool chained
-        ) noexcept -> ASTElement* = 0;
+        virtual auto set_element(std::unique_ptr<ASTElement> element, bool chained) noexcept -> ASTElement* = 0;
     };
 
-
     template<class T>
-    auto ASTVariable::initialize(const T& element_data) noexcept -> auto&
+    auto ASTVariable::initialize(T const& element_data) noexcept -> auto&
     {
         return append_element(element_data);
     }
 
     template<class T>
-    auto ASTVariable::chain_element(const T& element_data) noexcept -> auto&
+    auto ASTVariable::chain_element(T const& element_data) noexcept -> auto&
     {
         using return_type_raw = decltype(factory().create(element_data));
         using return_type = typename std::decay_t<return_type_raw>::element_type;
@@ -82,7 +73,7 @@ namespace ice::output
     }
 
     template<class T>
-    auto ASTVariable::append_element(const T& element_data) noexcept -> auto&
+    auto ASTVariable::append_element(T const& element_data) noexcept -> auto&
     {
         using return_type_raw = decltype(factory().create(element_data));
         using return_type = typename std::decay_t<return_type_raw>::element_type;
@@ -94,6 +85,5 @@ namespace ice::output
         }
         return *static_cast<return_type*>(result);
     }
-
 
 } // namespace ice::output

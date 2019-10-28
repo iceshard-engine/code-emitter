@@ -10,17 +10,22 @@ namespace ice::output
     namespace detail
     {
 
-        bool type_all_args_specialized(const std::vector<std::string>& args, const std::unordered_map<std::string, std::string>& specialized)
+        bool type_all_args_specialized(
+            std::vector<std::string> const& args,
+            std::unordered_map<std::string, std::string> const& specialized)
         {
             bool result = true;
-            std::for_each(args.begin(), args.end(), [&](const auto& arg)
-                {
-                    result &= specialized.count(arg) > 0;
-                });
+            std::for_each(args.begin(), args.end(), [&](const auto& arg) {
+                result &= specialized.count(arg) > 0;
+            });
             return result;
         }
 
-        std::string type_template_args(const std::vector<std::string>& args, const std::unordered_map<std::string, std::string>& specialized, const std::string& prefix, bool ignore_specialized)
+        std::string type_template_args(
+            std::vector<std::string> const& args,
+            std::unordered_map<std::string, std::string> const& specialized,
+            std::string const& prefix,
+            bool ignore_specialized)
         {
             if (args.empty())
             {
@@ -28,7 +33,7 @@ namespace ice::output
             }
 
             std::vector<std::string> results;
-            for (const auto& arg : args)
+            for (auto const& arg : args)
             {
                 auto spec_arg_it = specialized.find(arg);
                 if (ignore_specialized && spec_arg_it != specialized.end())
@@ -55,20 +60,18 @@ namespace ice::output
             auto end = results.end();
 
             std::string result = "<" + prefix + *it;
-            std::for_each(std::next(it), end, [&](const std::string& str)
-                {
-                    result += ", " + prefix + str;
-                });
+            std::for_each(std::next(it), end, [&](std::string const& str) {
+                result += ", " + prefix + str;
+            });
             return result + ">";
         }
 
-        std::string type_template_args_identifier(const std::vector<std::string>& args, const std::unordered_map<std::string, std::string>& specialized)
+        std::string type_template_args_identifier(std::vector<std::string> const& args, std::unordered_map<std::string, std::string> const& specialized)
         {
             return type_template_args(args, specialized, "", false);
         }
 
     } // namespace detail
-
 
     Type::Type()
         : _name{ "void" }
@@ -118,7 +121,7 @@ namespace ice::output
         }
     }
 
-    Type::Type(const Type& other, std::string name)
+    Type::Type(Type const& other, std::string name)
         : _name{ std::move(name) }
         , _template_args{ other._template_args }
         , _specialized_args{ other._specialized_args }
@@ -126,12 +129,12 @@ namespace ice::output
     {
     }
 
-    ice::output::Type Type::transform(const std::string& format)
+    ice::output::Type Type::transform(std::string const& format)
     {
         return { *this, std::regex_replace(format, std::regex{ R"_(\{\})_" }, _name) };
     }
 
-    ice::output::Type Type::specialize(const std::unordered_map<std::string, std::string>& specialization_map)
+    ice::output::Type Type::specialize(std::unordered_map<std::string, std::string> const& specialization_map)
     {
         // If the map is empty just return the copy of this type
         if (specialization_map.empty())
@@ -140,7 +143,7 @@ namespace ice::output
         }
 
         ht_assert(has(Property::TEMPLATE), "Cannot specialize a non-template type! [ type identifier: {} ]", identifier());
-        Type  new_type{ _name, _template_args, _properties };
+        Type new_type{ _name, _template_args, _properties };
 
         // Copy old values
         new_type._specialized_args = _specialized_args;

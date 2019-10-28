@@ -4,29 +4,19 @@
 namespace ice::output
 {
 
-
     struct Line
     {
         std::string value{ "" };
 
         struct Unique
         {
-            std::string value{ };
+            std::string value{};
         };
 
         Unique unique{ "" };
     };
 
-
     template<>
-    auto identifier(const Line&) noexcept -> std::string;
-
-
-    class ASTLine : public ASTElement
-    {
-    public:
-        explicit ASTLine(const ice::output::Line& data) noexcept;
-    };
-
+    auto identifier(Line const&) noexcept -> std::string;
 
 } // namespace ice::output

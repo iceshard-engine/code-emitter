@@ -2,16 +2,14 @@
 #include <ice/output/elements/types.hxx>
 #include <vector>
 
-
 namespace ice::output
 {
-
 
     struct Function
     {
         std::string name;
 
-        std::string parent_namespace{ };
+        std::string parent_namespace{};
 
         struct Argument
         {
@@ -22,11 +20,11 @@ namespace ice::output
             bool maybe_unused{ false };
         };
 
-        std::vector<Argument> arguments{ };
+        std::vector<Argument> arguments{};
 
         Type return_type{ ice::output::t_void };
 
-        std::string metadata{ };
+        std::string metadata{};
 
         bool is_const{ false };
 
@@ -53,9 +51,7 @@ namespace ice::output
         bool is_declaration{ false };
     };
 
-
     template<>
-    auto identifier(const Function& data) noexcept -> std::string;
-
+    auto identifier(Function const& data) noexcept -> std::string;
 
 } // namespace ice::output

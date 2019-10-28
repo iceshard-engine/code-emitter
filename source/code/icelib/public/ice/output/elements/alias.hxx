@@ -4,7 +4,6 @@
 namespace ice::output
 {
 
-
     struct Alias
     {
         std::string name;
@@ -12,16 +11,7 @@ namespace ice::output
         std::string type;
     };
 
-
     template<>
-    auto identifier(const Alias& alias_data) noexcept -> std::string;
-
-
-    class ASTAlias : public ASTElement
-    {
-    public:
-        explicit ASTAlias(const Alias& alias_data) noexcept;
-    };
-
+    auto identifier(Alias const& alias_data) noexcept -> std::string;
 
 } // namespace ice::output

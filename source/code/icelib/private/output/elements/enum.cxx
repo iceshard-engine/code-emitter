@@ -4,7 +4,7 @@ namespace ice::output
 {
 
     template<>
-    auto identifier(const Enum& data) noexcept -> std::string
+    auto identifier(Enum const& data) noexcept -> std::string
     {
         std::string result{ data.is_strong ? "enum" : "enum:class" };
         result += data.is_declaration ? "" : ":declaration";
@@ -15,9 +15,5 @@ namespace ice::output
         }
         return result;
     }
-
-    ASTEnum::ASTEnum(const Enum& data) noexcept
-        : ASTElement{ ice::output::identifier(data) }
-    { }
 
 } // namespace ice::output

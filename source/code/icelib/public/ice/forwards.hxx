@@ -3,9 +3,7 @@
 namespace ice
 {
 
-
     class Task;
-
 
     namespace input
     {
@@ -16,12 +14,10 @@ namespace ice
 
     } // namespace input
 
-
     namespace output
     {
 
         class Writer;
-
 
         class CallbackRegistry;
 
@@ -33,7 +29,6 @@ namespace ice
 
     } // namespace output
 
-
     namespace debug
     {
 
@@ -41,6 +36,4 @@ namespace ice
 
     } // namespace debug
 
-
 } // namespace ice
-

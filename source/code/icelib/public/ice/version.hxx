@@ -4,7 +4,6 @@
 namespace ice
 {
 
-
     //! \brief Major versions may change APIs and ABIs.
     static constexpr const uint16_t api_version_major = 1;
 
@@ -16,6 +15,5 @@ namespace ice
 
     //! \brief Current API version value.
     static constexpr const uint32_t api_version_effective = (uint32_t{ api_version_major } << 16) | uint32_t{ api_version_minor };
-
 
 } // namespace ice

@@ -32,10 +32,10 @@ namespace ice::input
 
 } // namespace ice::input
 
-template <>
+template<>
 struct fmt::formatter<ice::input::TokenType> : formatter<std::string>
 {
-    template <typename FormatContext>
+    template<typename FormatContext>
     auto format(ice::input::TokenType token_type, FormatContext& ctx)
     {
         return formatter<std::string>::format(to_string(token_type), ctx);
