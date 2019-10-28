@@ -37,11 +37,16 @@
 
     // Create a Visual Studio project description
     //--------------------------------------------------------------------------
-    VCXProject( '$ProjectName$-vcxproj' )
-    {
-        .ProjectOutput = '$ProjectName$.vcxproj'
-        .ProjectConfigs = .ProjectVisualStudioConfigs
-    }
+    .VisualStudioProject =
+    [
+        .ProjectName = .ProjectName
+        .ProjectGroup = .GroupMeta
+        .ProjectInfo =
+        [
+            .ProjectOutput = '$ProjectName$.vcxproj'
+            .ProjectConfigs = .ProjectVisualStudioConfigs
+        ]
+    ]
 
-    ^VisualStudioProjects + .ProjectName
+    ^VisualStudioProjects + .VisualStudioProject
 }

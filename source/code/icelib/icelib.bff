@@ -92,16 +92,20 @@
 
     // Create a Visual Studio project description
     //--------------------------------------------------------------------------
-    VCXProject( '$ProjectName$-vcxproj' )
-    {
-        .ProjectOutput = '$ProjectName$.vcxproj'
-        .ProjectConfigs = .ProjectVisualStudioConfigs
-        .ProjectInputPaths = .ProjectBaseDir
-        .ProjectBasePath = .ProjectBaseDir
-    }
+    .VisualStudioProject =
+    [
+        .ProjectName = .ProjectName
+        .ProjectGroup = .GroupLibs
+        .ProjectInfo =
+        [
+            .ProjectConfigs = .ProjectVisualStudioConfigs
+            .ProjectInputPaths = .ProjectBaseDir
+            .ProjectBasePath = .ProjectBaseDir
+        ]
+    ]
 
     // Register this project
     //--------------------------------------------------------------------------
     ^Projects + .ProjectName
-    ^VisualStudioProjects + .ProjectName
+    ^VisualStudioProjects + .VisualStudioProject
 }

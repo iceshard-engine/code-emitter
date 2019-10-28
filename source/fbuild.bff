@@ -19,6 +19,8 @@ Settings
 .WorkspaceScriptDir = '$WorkspaceSourceDir$/scripts'
 
 .WorkspaceConanModules = { 'fmt' }
+.WorkspaceConanModulesTests = .WorkspaceConanModules
+    + 'Catch2'
 
 
 // Required files to be included
@@ -61,20 +63,21 @@ ForEach( .Platform in .PlatformList )
 // Include project target scripts
 //--------------------------------------------------------------------------
 {
+    .GroupMeta = '0. FBuild'
+    .GroupLibs = '1. Libraries'
+    .GroupModules = '2. Modules'
+    .GroupTests = '3. Tests'
+    .GroupTools = ''
+
     .VisualStudioProjects = { }
 
-    // Add meta projects
-    .SolutionFolderName = '0. FBuild'
     #include "$WorkspaceScriptDir$/metaprojects.bff"
-    #include "$WorkspaceScriptDir$/vsgroup.bff"
-
-    // Add all project files
-    .SolutionFolderName = ''
     #include "$WorkspaceCodeDir$/projects.bff"
 
-    // Add all remaining project targets into the solution
-    #include "$WorkspaceScriptDir$/vsgroup.bff"
+    // Build Visual Studio project targets
+    #include "$WorkspaceScriptDir$/vsprojects.bff"
 }
+
 
 // Generate 'All' targets
 //--------------------------------------------------------------------------
