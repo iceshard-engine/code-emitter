@@ -1,26 +1,8 @@
 #pragma once
-#include <ice/input/entity.hxx>
-#include <memory>
-#include <functional>
-#include <vector>
+#include <ice/forwards.hxx>
 
 namespace ice::output
 {
-
-
-    //! \brief Describes a single callback.
-    class CallbackRegistry
-    {
-    public:
-        virtual ~CallbackRegistry() noexcept = default;
-
-        //! \brief Adds a callback function for the given entity type.
-        virtual void add_callback(ice::input::EntityType type, std::function<void(const std::shared_ptr<ice::input::Entity>&)> callback) noexcept = 0;
-
-        //! \brief Calls all callbacks for the given entity.
-        virtual void handle_entity(const std::shared_ptr<ice::input::Entity>& entity) const noexcept = 0;
-    };
-
 
     //! \brief Describes a generator service which is capable of building ICE AST trees.
     class Generator
@@ -35,13 +17,12 @@ namespace ice::output
         virtual void on_start_parsing(
             [[maybe_unused]] ice::input::Parser& parser,
             [[maybe_unused]] ice::output::Serializer& serializer
-        ) noexcept { }
+        ) noexcept {}
 
         //! \brief Called before the serialization step.
         virtual void on_start_serializing(
             [[maybe_unused]] ice::output::Serializer& serializer
-        ) noexcept { }
+        ) noexcept {}
     };
-
 
 } // namespace ice::output

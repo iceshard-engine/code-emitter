@@ -12,6 +12,8 @@ namespace ice
 
         class Parser;
 
+        class Entity;
+
     } // namespace input
 
 
