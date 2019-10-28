@@ -2,7 +2,8 @@
 #include <ice/input/position.hxx>
 #include <ice/input/attributes.hxx>
 #include <ice/input/entity_type.hxx>
-#include <unordered_set>
+
+#include <memory>
 
 namespace ice::input
 {
