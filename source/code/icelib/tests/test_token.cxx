@@ -13,7 +13,28 @@ SCENARIO("Tokenizer", "[token,parsing]")
         THEN("the tokenizer has a single 'EndOfFile' token.")
         {
             REQUIRE(tokenizer.has_next_token() == true);
-            REQUIRE(tokenizer.next_token().type == ice::input::TokenType::EndOfFile);
+            CHECK(tokenizer.next_token().type == ice::input::TokenType::EndOfFile);
+            REQUIRE(tokenizer.has_next_token() == false);
+        }
+    }
+
+    GIVEN("An string with a single symbol")
+    {
+        std::string empty_input{ "symbol" };
+
+        auto tokenizer = ice::input::tokenize_string(empty_input, "empty_input");
+
+        THEN("the tokenizer has two tokens.")
+        {
+            REQUIRE(tokenizer.has_next_token() == true);
+
+            auto token = tokenizer.next_token();
+            CHECK(token.type == ice::input::TokenType::Symbol);
+            CHECK(token.value == empty_input);
+
+            REQUIRE(tokenizer.has_next_token() == true);
+            CHECK(tokenizer.next_token().type == ice::input::TokenType::EndOfFile);
+
             REQUIRE(tokenizer.has_next_token() == false);
         }
     }
