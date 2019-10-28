@@ -18,6 +18,7 @@ jobs:
         conan remote add conan-bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 
     - name: Build
+      shell: cmd
       run: |
         ice build
 
