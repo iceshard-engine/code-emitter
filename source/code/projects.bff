@@ -7,3 +7,5 @@
 #include "$WorkspaceScriptDir$/vsgroup.bff"
 
 .SolutionFolderName = ''
+
+#include "iceapp/iceapp.bff"
