@@ -124,7 +124,7 @@ namespace ice::input
             }
 
             // Add the EOF token to the end of the list
-            co_yield ice::input::token{
+            co_return ice::input::token{
                 .type = TokenType::EndOfFile,
                 .position = position,
                 .value = ""
@@ -152,7 +152,11 @@ namespace ice::input
             co_yield std::move(token);
         }
 
-        co_return;
+        co_return ice::input::token{
+            .type = TokenType::EndOfFile,
+            .position = position,
+            .value = ""
+        };
     }
 
     auto tokenize_string(std::string contents, std::optional<std::string> name) noexcept -> Tokenizer
@@ -177,7 +181,11 @@ namespace ice::input
             co_yield std::move(token);
         }
 
-        co_return;
+        co_return ice::input::token{
+            .type = TokenType::EndOfFile,
+            .position = position,
+            .value = ""
+        };
     }
 
 } // namespace ice::input

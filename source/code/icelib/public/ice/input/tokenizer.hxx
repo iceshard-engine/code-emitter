@@ -23,7 +23,7 @@ namespace ice::input
             auto initial_suspend() noexcept -> std::experimental::suspend_always;
 
             //! \brief A tokenizer is not suspended uppon reaching the return statement.
-            auto return_void() noexcept -> std::experimental::suspend_never;
+            auto return_value(token value) noexcept -> std::experimental::suspend_never;
 
             //! \brief A tokenizer is suspended on destruction.
             auto final_suspend() noexcept -> std::experimental::suspend_always;

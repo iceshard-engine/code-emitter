@@ -13,8 +13,9 @@ namespace ice::input
         return {};
     }
 
-    auto Tokenizer::promise_type::return_void() noexcept -> std::experimental::suspend_never
+    auto Tokenizer::promise_type::return_value(token value) noexcept -> std::experimental::suspend_never
     {
+        _value = std::move(value);
         return {};
     }
 

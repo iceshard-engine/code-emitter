@@ -1,6 +1,5 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
-
 #include <ice/input/tokenizer_tasks.hxx>
 
 SCENARIO("Tokenizer", "[token,parsing]")
