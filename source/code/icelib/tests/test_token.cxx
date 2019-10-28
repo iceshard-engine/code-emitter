@@ -2,7 +2,7 @@
 #include <catch2/catch.hpp>
 #include <ice/input/tokenizer_tasks.hxx>
 
-SCENARIO("Tokenizer", "[token,parsing]")
+SCENARIO("Tokenizer", "[parsing,token]")
 {
     GIVEN("An empty string")
     {
