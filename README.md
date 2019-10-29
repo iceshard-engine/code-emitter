@@ -1,5 +1,8 @@
 # Iceshard Code Emitter 
 
+[![](https://github.com/iceshard-engine/code-emitter/workflows/Nightly/badge.svg)](https://github.com/iceshard-engine/code-emitter/actions?workflow=Nightly)
+[![](https://github.com/iceshard-engine/code-emitter/workflows/Validation/badge.svg)](https://github.com/iceshard-engine/code-emitter/actions?workflow=Validation)
+
 ## Quick introduction
 
 This project aims to provide a simple abstraction layer between three different tasks. 
