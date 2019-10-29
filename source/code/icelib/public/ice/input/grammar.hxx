@@ -52,6 +52,79 @@ namespace ice::input::grammar
 
         std::vector<std::variant<RuleType, RuleValue>> rules;
 
+        bool match(size_t& index, std::vector<token>& tokens, Tokenizer& tokenizer)
+        {
+            matched_tokens.clear();
+
+            auto const start_index = index;
+            auto size = tokens.size();
+
+            auto has_next_token = [&]() noexcept->bool
+            {
+                return index < size || tokenizer.has_next_token();
+            };
+
+            auto next_token = [&]() noexcept->token
+            {
+                if (index == size)
+                {
+                    tokens.emplace_back(tokenizer.next_token());
+                    ++size;
+                }
+                return tokens[index];
+            };
+
+            auto rule_it = rules.begin();
+            auto const rule_end = rules.end();
+
+            bool matched = true;
+            for (; matched && rule_it != rule_end && has_next_token(); ++rule_it)
+            {
+                auto parsed_token = next_token();
+
+                std::visit(
+                    overloaded{
+                        [&](RuleType const& arg) {
+                            matched &= (arg.token == parsed_token.type);
+                            if (matched)
+                            {
+                                ++index;
+                            }
+                            else
+                            {
+                                matched |= arg.optional;
+                            }
+                        },
+                        [&](RuleValue const& arg) {
+                            matched &= ((arg.token == parsed_token.type) && (arg.value == parsed_token.value));
+                            if (matched)
+                            {
+                                ++index;
+                            }
+                            else
+                            {
+                                matched |= arg.optional;
+                            }
+                        },
+                    },
+                    *rule_it);
+            }
+
+            if (rule_it != rule_end || matched == false)
+            {
+                index = start_index;
+            }
+            else
+            {
+                for (auto i = start_index; i < index; ++i)
+                {
+                    matched_tokens.emplace_back(tokens[i]);
+                }
+            }
+
+            return matched && rule_it == rule_end;
+        }
+
         bool match(std::vector<token>& tokens, Tokenizer& tokenizer)
         {
             matched_tokens.clear();
@@ -123,7 +196,8 @@ namespace ice::input::grammar
             std::vector<token> tokens_temp;
             for (auto& group : _groups)
             {
-                if (group.match(tokens_temp, tokenizer))
+                size_t index = 0;
+                if (group.match(index, tokens_temp, tokenizer))
                 {
                     matched |= true;
                 }
