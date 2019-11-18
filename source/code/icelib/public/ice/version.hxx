@@ -13,7 +13,10 @@ namespace ice
     //! \brief Patch versions may change implementations and introduce new APIs.
     static constexpr const uint32_t api_version_patch = 0;
 
+    //! \brief API version type.
+    enum struct Version : uint32_t;
+
     //! \brief Current API version value.
-    static constexpr const uint32_t api_version_effective = (uint32_t{ api_version_major } << 16) | uint32_t{ api_version_minor };
+    static constexpr const Version api_version = Version{ (uint32_t{ api_version_major } << 16) | uint32_t{ api_version_minor } };
 
 } // namespace ice

@@ -107,4 +107,5 @@ VSSolution( 'solution' )
 
     .SolutionFolders = .SolutionFolders
     .SolutionProjects = .SolutionProjects
+    .SolutionBuildProject = { 'iceapp-vcxproj' }
 }

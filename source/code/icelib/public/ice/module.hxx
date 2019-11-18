@@ -2,11 +2,15 @@
 #include <string_view>
 #include <unordered_map>
 #include <ice/debugging.hxx>
+#include <ice/version.hxx>
 
 namespace ice
 {
 
     class ModuleServices;
+
+    //! \brief The module identification value.
+    enum struct ModuleIdentifier : uint64_t;
 
     //! \brief Defines all module capabilities.
     enum class ModuleCapabilities : int32_t
@@ -22,10 +26,10 @@ namespace ice
     {
     public:
         //! \brief Unique identifier.
-        auto module_identifier() const noexcept -> uint64_t;
+        auto module_identifier() const noexcept -> ModuleIdentifier;
 
         //! \brief ABI version on which the module was build.
-        auto module_api_version() const noexcept -> uint32_t;
+        auto module_api_version() const noexcept -> Version;
 
         //! \brief Name of the module.
         virtual auto name() const noexcept -> std::string_view = 0;

@@ -5,14 +5,14 @@
 namespace ice
 {
 
-    auto Module::module_identifier() const noexcept -> uint64_t
+    auto Module::module_identifier() const noexcept -> ModuleIdentifier
     {
-        return std::hash<std::string_view>{}(name());
+        return static_cast<ModuleIdentifier>(std::hash<std::string_view>{}(name()));
     }
 
-    auto Module::module_api_version() const noexcept -> uint32_t
+    auto Module::module_api_version() const noexcept -> Version
     {
-        return ice::api_version_effective;
+        return ice::api_version;
     }
 
 } // namespace ice
