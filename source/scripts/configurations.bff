@@ -9,6 +9,7 @@
         + ' /Od'
         + ' /Z7'
         + ' /MDd'
+        + ' /await'
 
     .LinkerOptions = ' /DEBUG:FULL'
 
@@ -22,6 +23,7 @@
         + ' /O2'
         + ' /Z7'
         + ' /MD'
+        + ' /await'
 
     .LinkerOptions = ' /DEBUG:FULL'
 
@@ -35,6 +37,7 @@
         + ' /O2'
         // + ' /Z7'
         + ' /MD'
+        + ' /await'
 
     .ConanConfig = 'Release'
 ]
