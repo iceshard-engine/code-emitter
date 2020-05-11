@@ -1,4 +1,5 @@
 #import SystemRoot
+
 Settings
 {
     .Environment =
@@ -8,104 +9,20 @@ Settings
     }
 }
 
+; Include the generated compiler definitions
+#include "scripts/target_configurations.bff"
+#include "scripts/aliases.bff"
 
-// Workspace properties
-//--------------------------------------------------------------------------
-.WorkspaceRoot = '$_WORKING_DIR_$/$_CURRENT_BFF_DIR_$/..'
+; Workspace properties
 .WorkspaceBuildDir = '$WorkspaceRoot$/build'
+.WorkspaceCodeDir = '$WorkspaceRoot$/source/code'
 
-.WorkspaceSourceDir = '$_WORKING_DIR_$/$_CURRENT_BFF_DIR_$'
-.WorkspaceCodeDir = '$WorkspaceSourceDir$/code'
-.WorkspaceScriptDir = '$WorkspaceSourceDir$/scripts'
-
-.WorkspaceConanModules = { 'fmt' }
-.WorkspaceConanModulesTests = .WorkspaceConanModules
-    + 'Catch2'
-
-
-// Required files to be included
-//--------------------------------------------------------------------------
-#include "$WorkspaceBuildDir$/conan.bff"
-#include "$WorkspaceScriptDir$/compilers.bff"
-#include "$WorkspaceScriptDir$/platforms.bff"
-#include "$WorkspaceScriptDir$/configurations.bff"
-
-
-// Merge all active configurations and platforms
-//--------------------------------------------------------------------------
-.Configurations = { }
-
-ForEach( .Platform in .PlatformList )
+.ProjectsResolved = { }
 {
-    ForEach( .Config in .ConfigList )
-    {
-        // Create a single build configuration to be used in projects
-        .BuildConfig = .Platform
-            + .Config
-        ^Configurations + .BuildConfig
-    }
+    .DefaultGroup = 'Unspecified'
+    #include "code/projects.bff"
+    #include "scripts/project_definition.bff"
 }
 
-
-// Visual Studio specific properties
-//--------------------------------------------------------------------------
-.VSBuildCommand = '$WorkspaceRoot$/ice build -t'
-.VSRebuildCommand = '$WorkspaceRoot$/ice build --clean -t'
-
-
-// Predefine specific values used later when generating 'All' aliases
-//--------------------------------------------------------------------------
-.Projects = { }
-.SolutionFolders = { }
-.SolutionProjects = { }
-
-
-// Include project target scripts
-//--------------------------------------------------------------------------
-{
-    .GroupMeta = '0. FBuild'
-    .GroupLibs = '1. Libraries'
-    .GroupModules = '2. Modules'
-    .GroupTests = '3. Tests'
-    .GroupTools = ''
-
-    .VisualStudioProjects = { }
-
-    #include "$WorkspaceScriptDir$/metaprojects.bff"
-    #include "$WorkspaceCodeDir$/projects.bff"
-
-    // Build Visual Studio project targets
-    #include "$WorkspaceScriptDir$/vsprojects.bff"
-}
-
-
-// Generate 'All' targets
-//--------------------------------------------------------------------------
-ForEach( .Configuration in .Configurations )
-{
-    Using( .Configuration )
-
-    .AliasTargets = { }
-    ForEach( .Project in .Projects )
-    {
-        ^AliasTargets + '$Project$-$Platform$-$Config$'
-    }
-
-    Alias( 'all-$Platform$-$Config$' )
-    {
-        .Targets = .AliasTargets
-    }
-}
-
-
-// Create solution targets
-//--------------------------------------------------------------------------
-VSSolution( 'solution' )
-{
-    .SolutionOutput = '../Ice.sln'
-    .SolutionConfigs = .Configurations
-
-    .SolutionFolders = .SolutionFolders
-    .SolutionProjects = .SolutionProjects
-    .SolutionBuildProject = { 'iceapp-vcxproj' }
-}
+#include "scripts/project_targets.bff"
+#include "scripts/project_vsprojects.bff"

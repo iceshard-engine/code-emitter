@@ -5,6 +5,7 @@
 #include <filesystem>
 
 #define WIN32_LEAN_AND_MEAN
+#define NO_MINMAX
 #include <Windows.h>
 
 namespace ice
@@ -26,7 +27,7 @@ namespace ice
 
         void log_info(std::string_view message, fmt::format_args args) noexcept
         {
-            auto formatted_message = fmt::vformat(message, args);
+            auto formatted_message = fmt::vformat(message, std::move(args));
             fmt::print(stdout, detail::message_format, detail::module_name, "message", formatted_message);
         }
 

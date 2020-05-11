@@ -1,120 +1,19 @@
-// Template Project File
-//------------------------------------------------------------------------------
-{
-    .ProjectName = 'iceapp'
-    .ProjectBaseDir = '$_CURRENT_BFF_DIR_$'
+.Project =
+[
+    .Name = 'ice'
+    .Kind = .Kind_ConsoleApp
+    .Group = 'Core'
 
+    .BaseDir = '$WorkspaceCodeDir$/iceapp'
 
-    // Additional helper variables
-    //------------------------------------------------------------------------------
-    .ProjectConanModules = .WorkspaceConanModules
-        + 'CLI11'
-    .ProjectVisualStudioConfigs = { }
-
-
-    // Library
-    //--------------------------------------------------------------------------
-    ForEach( .Configuration in .Configurations )
-    {
-        Using( .Configuration )
-
-
-        // Conan Dependencies
-        //--------------------------------------------------------------------------
-        ForEach( .ConanModule in .ProjectConanModules )
-        {
-            Using( .'ConanModule_$ConanModule$_$ConanConfig$' )
-
-            // Compiler arguments
-            ForEach( .IncludeDir in .IncludeDirs )
-            {
-                ^CompilerOptions + ' /I"$IncludeDir$"'
-            }
-            ForEach( .Define in .Defines )
-            {
-                ^CompilerOptions + ' /D$Define$'
-            }
-            ForEach( .LibDir in .LibDirs )
-            {
-                ^LinkerOptions + ' /LIBPATH:"$LibDir$"'
-            }
-            ForEach( .Library in .Libs )
-            {
-                ^LinkerOptions + ' $Library$.lib'
-            }
-        }
-
-
-        // Configuration properties
-        //--------------------------------------------------------------------------
-        .ConfigurationIntermediateDirectory = '$WorkspaceBuildDir$/obj/$Platform$-$Config$/$ProjectName$'
-        .ConfigurationTargetDirectory = '$WorkspaceBuildDir$/bin/$Platform$-$Config$/$ProjectName$'
-
-
-        // Object lists
-        //--------------------------------------------------------------------------
-        ObjectList( '$ProjectName$-$Platform$-$Config$-objects' )
-        {
-            .CompilerOptions + ' /I"$ProjectBaseDir$/public"'
-                + ' /I"$WorkspaceCodeDir$/icelib/public"'
-
-            .CompilerOutputPath = .ConfigurationIntermediateDirectory
-            .CompilerInputPath = '$ProjectBaseDir$/private'
-            .CompilerInputPattern = '*.cxx'
-
-            .CompilerInputAllowNoFiles = true
-        }
-
-
-        // Executable target
-        //--------------------------------------------------------------------------
-        Executable( '$ProjectName$-$Platform$-$Config$' )
-        {
-            .Libraries = {
-                '$ProjectName$-$Platform$-$Config$-objects'
-                'icelib-$Platform$-$Config$'
-            }
-
-            .LinkerOutput = '$ConfigurationTargetDirectory$/ice.exe'
-        }
-
-
-        // Visual Studio project configuration
-        //--------------------------------------------------------------------------
-        .ProjectVisualStudioConfig =
-        [
-            .PlatformToolset = .PlatformToolset
-
-            .Platform = .Platform
-            .Config = .Config
-            .Target = '$ProjectName$-$Platform$-$Config$-objects'
-
-            .IntermediateDirectory = .ConfigurationIntermediateDirectory
-            .OutputDirectory = .ConfigurationTargetDirectory
-            .Output = '$ConfigurationTargetDirectory$/ice.exe'
-
-            .ProjectBuildCommand = '$VSBuildCommand$ $ProjectName$-$Platform$-$Config$'
-            .ProjectRebuildCommand = '$VSRebuildCommand$ $ProjectName$-$Platform$-$Config$'
-        ]
-        ^ProjectVisualStudioConfigs + .ProjectVisualStudioConfig
-    }
-
-    // Create a Visual Studio project description
-    //--------------------------------------------------------------------------
-    .VisualStudioProject =
+    .Public =
     [
-        .ProjectName = .ProjectName
-        .ProjectGroup = .GroupTools
-        .ProjectInfo =
-        [
-            .ProjectConfigs = .ProjectVisualStudioConfigs
-            .ProjectInputPaths = .ProjectBaseDir
-            .ProjectBasePath = .ProjectBaseDir
-        ]
+        .Uses = {
+            'icelib'
+        }
+        .Modules = {
+            'CLI11'
+        }
     ]
-
-    // Register this project
-    //--------------------------------------------------------------------------
-    ^Projects + .ProjectName
-    ^VisualStudioProjects + .VisualStudioProject
-}
+]
+.Projects + .Project
