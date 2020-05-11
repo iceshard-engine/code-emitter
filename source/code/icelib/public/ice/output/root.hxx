@@ -10,7 +10,7 @@ namespace ice::output
         ASTRoot() noexcept;
 
         //! \copydoc ASTContainer::serialize
-        void serialize(Writer& writer) const noexcept override;
+        void serialize(ice::output::Writer& writer) const noexcept override;
 
         //! \brief Checks if the given Root element is enabled from serialization.
         virtual bool enabled() const noexcept = 0;
@@ -23,7 +23,7 @@ namespace ice::output
         virtual auto location() const noexcept -> std::string = 0;
 
         //! \brief Serializes the whole Root element and all its children to the final representation.
-        virtual void serialize() const noexcept = 0;
+        virtual void serialize() noexcept = 0;
     };
 
 } // namespace ice::output

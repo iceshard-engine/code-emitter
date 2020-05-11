@@ -25,6 +25,8 @@ namespace ice
     class Module
     {
     public:
+        virtual ~Module() noexcept = default;
+
         //! \brief Unique identifier.
         auto module_identifier() const noexcept -> ModuleIdentifier;
 
@@ -38,10 +40,21 @@ namespace ice
         virtual auto description() const noexcept -> std::string_view = 0;
 
         //! \brief Module capabilities.
-        virtual auto capabilities() const noexcept -> ModuleCapabilities { return ModuleCapabilities::None; }
+        virtual auto capabilities() const noexcept -> ice::ModuleCapabilities { return ice::ModuleCapabilities::None; }
+
+        bool has_capability(ice::ModuleCapabilities capability) noexcept
+        {
+            auto const capability_val = static_cast<uint32_t>(capability);
+            return (capability_val & static_cast<uint32_t>(capabilities())) == capability_val;
+        }
 
         //! \brief Called with application arguments provided in a <string, string> map.
-        virtual bool initialize([[maybe_unused]] std::unordered_map<std::string, std::vector<std::string>> const& arguments) noexcept { return true; }
+        virtual bool initialize(
+            [[maybe_unused]] std::unordered_map<std::string, std::vector<std::string>> const& arguments
+        ) noexcept
+        {
+            return true;
+        }
 
         //! \brief Called with debug info for initializing debugger capabilities on modules.
         virtual void initialize_debuginfo(ice::detail::DebugInfo& debug_info) noexcept

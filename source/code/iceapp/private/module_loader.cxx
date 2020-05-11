@@ -24,6 +24,7 @@ namespace ice
 
     ModuleLoader::ModuleHandleImpl::~ModuleHandleImpl() noexcept
     {
+        module_object = nullptr;
         if (raw_handle != nullptr)
         {
             FreeLibrary(raw_handle);
@@ -35,6 +36,34 @@ namespace ice
     ModuleLoader::~ModuleLoader() noexcept
     {
         _modules.clear();
+    }
+
+    void ModuleLoader::load_all(std::filesystem::path location, bool recursive) noexcept
+    {
+        if (std::filesystem::is_directory(location) == false)
+        {
+            return;
+        }
+
+        auto try_load_modules = [this](auto dir_iterator) noexcept
+        {
+            for (auto entry : dir_iterator)
+            {
+                if (entry.is_regular_file() && entry.path().extension() == L".dll")
+                {
+                    load_module(entry.path());
+                }
+            }
+        };
+
+        if (recursive)
+        {
+            try_load_modules(std::filesystem::directory_iterator{ location });
+        }
+        else
+        {
+            try_load_modules(std::filesystem::recursive_directory_iterator{ location });
+        }
     }
 
     bool ModuleLoader::load_module(std::filesystem::path module_location) noexcept
@@ -83,6 +112,16 @@ namespace ice
 
         _modules.emplace(std::move(module_name), std::move(module_handle));
         return true;
+    }
+
+    void ModuleLoader::each_module(std::function<void(ice::Module&)> callback) noexcept
+    {
+        for (auto const& module : _modules)
+        {
+            callback(
+                *static_cast<ModuleLoader::ModuleHandleImpl*>(module.second.get())->module_object
+            );
+        }
     }
 
 } // namespace ice

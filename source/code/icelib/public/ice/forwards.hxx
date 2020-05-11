@@ -3,7 +3,7 @@
 namespace ice
 {
 
-    class Task;
+    class Job;
 
     namespace input
     {

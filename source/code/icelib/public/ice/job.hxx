@@ -1,6 +1,6 @@
 #pragma once
 #include <ice/forwards.hxx>
-#include <cstdint>
+#include <memory>
 
 namespace ice
 {
@@ -19,7 +19,19 @@ namespace ice
     class Job
     {
     public:
+        Job(JobAction action, std::unique_ptr<JobServices> services) noexcept;
+
         virtual ~Job() noexcept = default;
+
+        auto action() const noexcept;
+
+        auto services() noexcept -> JobServices&;
+
+        virtual void execute() noexcept = 0;
+
+    private:
+        JobAction const _action;
+        std::unique_ptr<JobServices> _job_services;
     };
 
 } // namespace ice

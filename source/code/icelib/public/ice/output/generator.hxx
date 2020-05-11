@@ -11,12 +11,13 @@ namespace ice::output
         virtual ~Generator() noexcept = default;
 
         //! \brief Called during callback registration.
-        virtual void register_callbacks(CallbackRegistry& registry) noexcept = 0;
+        virtual void register_callbacks(
+            ice::output::CallbackRegistry& registry
+        ) noexcept = 0;
 
         //! \brief Called before the parsing step.
         virtual void on_start_parsing(
-            [[maybe_unused]] ice::input::Parser& parser,
-            [[maybe_unused]] ice::output::Serializer& serializer
+            [[maybe_unused]] ice::Job& job
         ) noexcept {}
 
         //! \brief Called before the serialization step.

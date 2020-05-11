@@ -8,6 +8,8 @@ namespace ice
     class ModuleServices
     {
     public:
+        virtual ~ModuleServices() noexcept = default;
+
         //! \brief A Parser object producing 'Entity' objects.
         virtual auto parser_service() noexcept -> ice::input::Parser* { return nullptr; }
 

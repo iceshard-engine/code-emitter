@@ -9,11 +9,10 @@ namespace ice
     class JobServices
     {
     public:
-        //! \brief A Parser object producing 'Entity' objects.
-        virtual auto parser_service() noexcept -> ice::input::Parser& = 0;
+        virtual auto next_entity() noexcept -> std::shared_ptr<ice::input::Entity> = 0;
 
         //! \brief A registry with all registered callbacks.
-        virtual auto callback_registry() const noexcept -> ice::output::CallbackRegistry const& = 0;
+        virtual auto callback_registry() noexcept -> ice::output::CallbackRegistry& = 0;
 
         //! \brief A Serializer object serializing 'Element' objects.
         virtual auto serializer_service() noexcept -> ice::output::Serializer& = 0;
@@ -21,5 +20,11 @@ namespace ice
         //! \brief Calls the given callback for each Generator service.
         virtual void visit_generators(std::function<void(ice::output::Generator&)> const& callback) noexcept = 0;
     };
+
+    auto create_generic_services(
+        ice::input::Parser* parser,
+        ice::output::Serializer* serializer,
+        std::vector<ice::output::Generator*> generators
+    ) noexcept -> std::unique_ptr<JobServices>;
 
 } // namespace ice

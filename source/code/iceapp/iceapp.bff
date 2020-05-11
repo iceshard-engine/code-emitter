@@ -2,7 +2,7 @@
 [
     .Name = 'ice'
     .Kind = .Kind_ConsoleApp
-    .Group = 'Core'
+    .Group = 'Apps'
 
     .BaseDir = '$WorkspaceCodeDir$/iceapp'
 

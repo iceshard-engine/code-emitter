@@ -1,5 +1,5 @@
-#include <ice/input/tokenizer_tasks.hxx>
 #include <ice/assert.hxx>
+#include <ice/job.hxx>
 
 #include <fmt/format.h>
 #include <CLI/CLI.hpp>
@@ -7,6 +7,7 @@
 #include <filesystem>
 
 #include "module_loader.hxx"
+#include "generic_job.hxx"
 
 int main(int argc, char** argv)
 {
@@ -20,6 +21,16 @@ int main(int argc, char** argv)
     code_emitter.add_option("-o,--output", output_file, "The resulting output file.")
         ->required();
 
+    std::vector<std::string> modules_path_list;
+    code_emitter.add_option("--modules", modules_path_list, "Location of Ice modules.")
+        ->default_val(".");
+
+    //std::vector<std::string> serializers;
+    //code_emitter.add_option("-s,--serializer", serializers, "Serializers to be used, will default to all if none is chosen.");
+
+    //std::string parser;
+    //code_emitter.add_option("-p,--parser", parser, "The parser to be used if multiple are available, fails if none is chosen");
+
     CLI11_PARSE(code_emitter, argc, argv);
 
     // Check the file for existance.
@@ -32,16 +43,19 @@ int main(int argc, char** argv)
     {
         ice::ModuleLoader module_loader;
 
-        input_file = std::filesystem::canonical(input_file).generic_string();
-
-        std::ifstream file{ input_file, std::ios::binary | std::ios::in };
-
-        auto tokenizer = ice::input::tokenize_stream(file, input_file);
-        for (auto token = tokenizer.next_token(); tokenizer.has_next_token(); token = tokenizer.next_token())
+        // Find and load additional modules.
+        for (auto modules_path : modules_path_list)
         {
-            ht_assert(token.type != ice::input::TokenType::Invalid, "{}", token);
-            fmt::print("{}\n", token);
+            module_loader.load_all(modules_path);
         }
+
+        // Create a generic job (1 parser, 1 serializer, N generators)
+        auto job = ice::create_generic_job(module_loader, {
+            { "input", { input_file } }
+        });
+
+        // Execute the job
+        job->execute();
     }
 
     return 0;
