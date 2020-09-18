@@ -1,7 +1,2 @@
-#once
-
-.Projects = { }
-
-// Include projects
 #include "icelib/icelib.bff"
 #include "iceapp/iceapp.bff"
